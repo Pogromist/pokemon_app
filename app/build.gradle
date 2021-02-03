@@ -42,11 +42,17 @@ dependencies {
     // CardView
     implementation 'androidx.cardview:cardview:1.0.0'
 
+    // Cicerone
+    implementation 'com.github.terrakok:cicerone:6.6'
+
     // Dagger 2
     implementation 'com.google.dagger:dagger-android:2.20'
     implementation 'com.google.dagger:dagger-android-support:2.20'
     kapt 'com.google.dagger:dagger-android-processor:2.20'
     kapt 'com.google.dagger:dagger-compiler:2.20'
+
+    // Material Design
+    implementation 'com.google.android.material:material:1.2.1'
 
     // Moxy
     implementation 'com.github.moxy-community:moxy:2.2.1'
