@@ -1,5 +1,5 @@
 package com.example.pokemonapp.data.model
 
-data class PokemonResponseData(
+data class PokemonNameData(
     val results: List<Result>? = null
 )
