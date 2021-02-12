@@ -42,7 +42,6 @@ class PokemonListFragment : MvpAppCompatFragment(), PokemonListView {
 
     override fun showPokemonsList(pokemonResponseData: List<Result>) {
         Log.d("PokemonListFragment", "showPokemonsList()")
-        //recyclerView.adapter = pokemonResponseData?.let { PokemonListAdapter(it) }
         val adapter = PokemonListAdapter(pokemonResponseData)
         adapter.setOnItemClickListener(object: PokemonListAdapter.OnItemCLickListener {
             override fun onItemCLick(position: Int) {

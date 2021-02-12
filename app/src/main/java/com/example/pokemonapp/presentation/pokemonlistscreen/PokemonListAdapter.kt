@@ -1,11 +1,10 @@
 package com.example.pokemonapp.presentation.pokemonlistscreen
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pokemonapp.R
+import com.example.pokemonapp.data.model.PokemonNameData
 import com.example.pokemonapp.data.model.Result
 import kotlinx.android.synthetic.main.rv_text_row.view.*
 
