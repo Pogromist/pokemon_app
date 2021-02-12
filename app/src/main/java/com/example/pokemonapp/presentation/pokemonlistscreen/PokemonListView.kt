@@ -10,6 +10,7 @@ import moxy.viewstate.strategy.StateStrategyType
 interface PokemonListView : MvpView {
 
     fun showPokemonsList(pokemonResponseData: List<Result>)
+    fun onPokemonClicked()
     fun showSuccessMessage()
     fun showErrorMessage()
 

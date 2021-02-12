@@ -10,7 +10,8 @@ import moxy.MvpPresenter
 import javax.inject.Inject
 
 @InjectViewState
-class PokemonListPresenter @Inject constructor(): MvpPresenter<PokemonListView>(), PokemonRepository.OnPokemonsFetchedListener {
+class PokemonListPresenter @Inject constructor() : MvpPresenter<PokemonListView>(),
+    PokemonRepository.OnPokemonsFetchedListener {
 
     private var pokemonRepository: PokemonRepositoryInterface
     private var pokemonList: List<Result>? = null
@@ -21,21 +22,12 @@ class PokemonListPresenter @Inject constructor(): MvpPresenter<PokemonListView>(
         Log.d("PokemonListPresenter", "getPokemonsList()")
     }
 
-    fun onGetPokemonsListAction(pokemonResponseData: PokemonNameData) {
-        pokemonRepository.getPokemonsList()
-        //viewState.showPokemonsList(pokemonResponseData.result)
-    }
-
-    override fun showPokemonsList(pokemonNameData:  List<Result>) {
+    override fun showPokemonsList(pokemonNameData: List<Result>) {
         pokemonList = pokemonNameData
         viewState.showPokemonsList(pokemonList!!)
     }
 
-
-    /*override fun onDestroy() {
-        super.onDestroy()
-        getObserver().dispose()
-    }*/
-
-
+    fun onItemClicked(position: Int) {
+        viewState.onPokemonClicked()
+    }
 }

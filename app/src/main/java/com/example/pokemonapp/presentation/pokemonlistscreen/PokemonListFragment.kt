@@ -40,21 +40,28 @@ class PokemonListFragment : MvpAppCompatFragment(), PokemonListView {
         pokemonListPresenter.onDestroy()
     }
 
-    override fun showErrorMessage() {
-        Toast.makeText(context, "Error response!", Toast.LENGTH_SHORT).show()
-    }
-
     override fun showPokemonsList(pokemonResponseData: List<Result>) {
         Log.d("PokemonListFragment", "showPokemonsList()")
-        recyclerView.adapter = pokemonResponseData?.let { PokemonListAdapter(it) }
+        //recyclerView.adapter = pokemonResponseData?.let { PokemonListAdapter(it) }
+        val adapter = PokemonListAdapter(pokemonResponseData)
+        adapter.setOnItemClickListener(object: PokemonListAdapter.OnItemCLickListener {
+            override fun onItemCLick(position: Int) {
+                pokemonListPresenter.onItemClicked(position)
+            }
+        })
+        recyclerView.adapter = adapter
+
     }
 
-    /*override fun onPostClicked(text: Result) {
-        Toast.makeText(requireContext(), "Item Clicked",Toast.LENGTH_LONG).show()
-
-    }*/
+    override fun onPokemonClicked() {
+        Toast.makeText(requireContext(), "Pokemon Clicked",Toast.LENGTH_LONG).show()
+    }
 
     override fun showSuccessMessage() {
         Toast.makeText(context, "Success response!", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun showErrorMessage() {
+        Toast.makeText(context, "Error response!", Toast.LENGTH_SHORT).show()
     }
 }
