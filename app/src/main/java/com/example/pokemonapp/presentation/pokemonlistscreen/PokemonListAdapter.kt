@@ -23,7 +23,7 @@ class PokemonListAdapter(private val values: List<Result>) :
 
     override fun onBindViewHolder(holder: PokemonListViewHolder, position: Int) {
         holder.itemView.apply {
-            textView.text = values[position].name
+            pokemonName.text = values[position].name
         }
     }
 
