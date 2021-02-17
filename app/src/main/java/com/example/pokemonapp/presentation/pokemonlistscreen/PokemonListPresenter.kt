@@ -1,7 +1,6 @@
 package com.example.pokemonapp.presentation.pokemonlistscreen
 
 import android.util.Log
-import com.example.pokemonapp.data.model.PokemonNameData
 import com.example.pokemonapp.data.model.Result
 import com.example.pokemonapp.repository.PokemonRepository
 import com.example.pokemonapp.repository.PokemonRepositoryInterface
@@ -11,10 +10,10 @@ import javax.inject.Inject
 
 @InjectViewState
 class PokemonListPresenter @Inject constructor() : MvpPresenter<PokemonListView>(),
-    PokemonRepository.OnPokemonsFetchedListener {
+    PokemonRepository.OnPokemonListFetched
+{
 
     private var pokemonRepository: PokemonRepositoryInterface
-    private var pokemonList: List<Result>? = null
 
     init {
         pokemonRepository = PokemonRepository(this)
@@ -23,11 +22,16 @@ class PokemonListPresenter @Inject constructor() : MvpPresenter<PokemonListView>
     }
 
     override fun showPokemonsList(pokemonNameData: List<Result>) {
-        pokemonList = pokemonNameData
-        viewState.showPokemonsList(pokemonList!!)
+        viewState.showPokemonsList(pokemonNameData)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        pokemonRepository.disposeAll()
     }
 
     fun onItemClicked(position: Int) {
-        viewState.onPokemonClicked()
+        Log.d("PokemonListPresenter", "onItemClicked($position)")
+        pokemonRepository.savePosition(position)
     }
 }

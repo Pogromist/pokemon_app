@@ -6,18 +6,27 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import com.example.pokemonapp.App
 import com.example.pokemonapp.R
-import com.example.pokemonapp.data.model.PokemonNameData
 import com.example.pokemonapp.data.model.Result
-import com.example.pokemonapp.di.DaggerPokemonListPresenterComponent
+import com.example.pokemonapp.di.component.DaggerApplicationComponent
+import com.example.pokemonapp.di.modules.FragmentModule
+import com.example.pokemonapp.navigation.Screens
 import kotlinx.android.synthetic.main.pokemon_list_fragment.*
 import moxy.MvpAppCompatFragment
 import javax.inject.Inject
 
-class PokemonListFragment : MvpAppCompatFragment(), PokemonListView {
+class PokemonListFragment : MvpAppCompatFragment(),
+    PokemonListView {
 
     @Inject
     lateinit var pokemonListPresenter: PokemonListPresenter
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        Log.d("PokemonListFragment", "onCreate()")
+        injectDependency()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,10 +37,8 @@ class PokemonListFragment : MvpAppCompatFragment(), PokemonListView {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        DaggerPokemonListPresenterComponent.create().inject(this)
         pokemonListPresenter.attachView(this)
         Log.d("PokemonListFragment", "attachView()")
-
     }
 
     override fun onDestroyView() {
@@ -43,17 +50,14 @@ class PokemonListFragment : MvpAppCompatFragment(), PokemonListView {
     override fun showPokemonsList(pokemonResponseData: List<Result>) {
         Log.d("PokemonListFragment", "showPokemonsList()")
         val adapter = PokemonListAdapter(pokemonResponseData)
-        adapter.setOnItemClickListener(object: PokemonListAdapter.OnItemCLickListener {
+        adapter.setOnItemClickListener(object : PokemonListAdapter.OnItemCLickListener {
             override fun onItemCLick(position: Int) {
+                Log.d("PokemonListFragment", "onItemClick($position)")
+                App.INSTANCE.router.navigateTo(Screens.PokemonDetailScreen())
                 pokemonListPresenter.onItemClicked(position)
             }
         })
         recyclerView.adapter = adapter
-
-    }
-
-    override fun onPokemonClicked() {
-        Toast.makeText(requireContext(), "Pokemon Clicked",Toast.LENGTH_LONG).show()
     }
 
     override fun showSuccessMessage() {
@@ -62,5 +66,14 @@ class PokemonListFragment : MvpAppCompatFragment(), PokemonListView {
 
     override fun showErrorMessage() {
         Toast.makeText(context, "Error response!", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun injectDependency() {
+        val pokemonListFragmentComponent = DaggerApplicationComponent
+            .builder()
+            .fragmentModule(FragmentModule())
+            .build()
+
+        pokemonListFragmentComponent.inject(this)
     }
 }
