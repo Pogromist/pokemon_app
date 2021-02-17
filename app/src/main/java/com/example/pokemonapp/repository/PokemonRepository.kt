@@ -1,6 +1,7 @@
 package com.example.pokemonapp.repository
 
 import android.util.Log
+import com.example.pokemonapp.data.model.PokemonDetailData
 import com.example.pokemonapp.data.model.PokemonNameData
 import com.example.pokemonapp.data.model.Result
 import com.example.pokemonapp.network.RetrofitInstance
@@ -9,28 +10,16 @@ import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.observers.DisposableObserver
 import io.reactivex.rxjava3.schedulers.Schedulers
 
-class PokemonRepository(private val onPokemonsFetchedListener: OnPokemonsFetchedListener) :
-    PokemonRepositoryInterface {
-
-    private var pokemonList: List<Result>? = null
+class PokemonRepository(
+    private val onPokemonListFetched:
+    OnPokemonListFetched
+) : PokemonRepositoryInterface {
 
     override fun getPokemonsList() {
-        Log.d("PokemonRepository", "getPokemonsList()")
         getObservable()?.subscribeWith(getObserver())
-        //getObserver().dispose()
     }
-
-    override fun getPokemonDetails(position: Int) {
-        TODO("Not yet implemented")
-    }
-
-    /*override fun getPokemonDetails(position: Int) {
-        getObservableDetail(position)?.subscribeWith(getObserverDetail())
-    }*/
 
     private fun getObservable(): Observable<PokemonNameData>? {
-        Log.d("PokemonRepository", "getObservable()")
-
         return RetrofitInstance.buildService()
             .getPokemonList()
             .subscribeOn(Schedulers.io())
@@ -41,9 +30,7 @@ class PokemonRepository(private val onPokemonsFetchedListener: OnPokemonsFetched
         return object : DisposableObserver<PokemonNameData>() {
             override fun onNext(pokemonNameData: PokemonNameData?) {
                 if (pokemonNameData != null) {
-                    pokemonNameData.results?.let { onPokemonsFetchedListener.showPokemonsList(it) }
-                    Log.d("PokemonRepository", "POKEMON RESPONSE DATA: " +
-                            "${pokemonNameData.results}")
+                    pokemonNameData.results?.let { onPokemonListFetched.showPokemonsList(it) }
                 }
             }
 
@@ -57,36 +44,19 @@ class PokemonRepository(private val onPokemonsFetchedListener: OnPokemonsFetched
         }
     }
 
-    /*private fun getObservableDetail(position: Int): Observable<PokemonDetailData>? {
-        return RetrofitInstance.buildService()
-            .getPokemonDetails(position)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+    override fun savePosition(position: Int) {
+        Position.position = position
     }
 
-    private fun getObserverDetail(): DisposableObserver<PokemonDetailData> {
-        return object : DisposableObserver<PokemonDetailData>() {
-            override fun onNext(pokemonDetailData: PokemonDetailData?) {
-                if (pokemonDetailData != null) {
-                    viewState.showPokemonDetails(pokemonDetailData)
-                } else {
-                    viewState.showErrorMessage()
-                }
-            }
+    override fun disposeAll() {
+        getObserver().dispose()
+    }
 
-            override fun onError(e: Throwable?) {
-                Log.d("PokemonRepository", "Error: $e")
-                viewState.showErrorMessage()
-            }
-
-            override fun onComplete() {
-                Log.d("PokemonRepository", "Completed")
-            }
-        }
-    }*/
-
-    interface OnPokemonsFetchedListener {
+    interface OnPokemonListFetched {
         fun showPokemonsList(pokemonNameData: List<Result>)
     }
+}
 
+object Position {
+    var position: Int? = null
 }
