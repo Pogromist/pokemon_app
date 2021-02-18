@@ -1,7 +1,5 @@
 package com.example.pokemonapp.repository
 
-import android.util.Log
-import com.example.pokemonapp.data.model.PokemonDetailData
 import com.example.pokemonapp.data.model.PokemonNameData
 import com.example.pokemonapp.data.model.Result
 import com.example.pokemonapp.network.RetrofitInstance
@@ -35,11 +33,11 @@ class PokemonRepository(
             }
 
             override fun onError(e: Throwable?) {
-                Log.d("PokemonRepository", "Error: $e")
+                //Log.d("PokemonRepository", "Error: $e")
             }
 
             override fun onComplete() {
-                Log.d("PokemonRepository", "Completed")
+               // Log.d("PokemonRepository", "Completed")
             }
         }
     }
@@ -59,4 +57,5 @@ class PokemonRepository(
 
 object Position {
     var position: Int? = null
+    var flag: Boolean? = null
 }

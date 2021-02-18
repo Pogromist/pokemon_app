@@ -1,6 +1,5 @@
 package com.example.pokemonapp.repository
 
-import android.util.Log
 import com.example.pokemonapp.data.model.PokemonDetailData
 import com.example.pokemonapp.network.RetrofitInstance
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -33,18 +32,15 @@ class PokemonRepositoryDetail(
             override fun onNext(pokemonDetailData: PokemonDetailData?) {
                 if (pokemonDetailData != null) {
                     onPokemonDetailsFetched.showPokemonDetails(pokemonDetailData)
-                    Log.d("PokemonRepository", "POKEMON DETAIL DATA: $pokemonDetailData")
-                } else {
-                    Log.d("PokemonRepository", "NULL: $pokemonDetailData")
                 }
             }
 
             override fun onError(e: Throwable?) {
-                Log.d("PokemonRepository", "Error: $e")
+               // Log.d("PokemonRepository", "Error: $e")
             }
 
             override fun onComplete() {
-                Log.d("PokemonRepository", "Observer Detail Completed")
+               // Log.d("PokemonRepository", "Observer Detail Completed")
             }
         }
     }

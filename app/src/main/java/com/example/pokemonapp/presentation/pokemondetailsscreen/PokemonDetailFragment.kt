@@ -1,19 +1,15 @@
 package com.example.pokemonapp.presentation.pokemondetailsscreen
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import com.example.pokemonapp.App
 import com.example.pokemonapp.R
 import com.example.pokemonapp.data.model.PokemonDetailData
 import com.example.pokemonapp.di.component.DaggerApplicationComponent
 import com.example.pokemonapp.di.modules.FragmentModule
-import com.example.pokemonapp.navigation.Screens
-import com.example.pokemonapp.repository.PokemonRepository
-import com.example.pokemonapp.repository.PokemonRepositoryDetail
 import kotlinx.android.synthetic.main.pokemon_detail_fragment.*
 import moxy.MvpAppCompatFragment
 import javax.inject.Inject
@@ -34,12 +30,13 @@ class PokemonDetailFragment : MvpAppCompatFragment(), PokemonDetailView {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        Log.d("PokemonDetailFragment", "onCreateView()")
         return inflater.inflate(R.layout.pokemon_detail_fragment, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         pokemonDetailPresenter.attachView(this)
-        Log.d("PokemonDetailFragment", "attachView() POSITION: = ")
+        Log.d("PokemonDetailFragment", "onViewCreated()")
     }
 
     override fun onDestroyView() {
@@ -50,23 +47,17 @@ class PokemonDetailFragment : MvpAppCompatFragment(), PokemonDetailView {
     }
 
     override fun showPokemonDetails(pokemonDetailData: PokemonDetailData) {
-        Log.d("PokemonDetailFragment", "showPokemonDetails() : $pokemonDetailData")
-        Toast.makeText(
-            requireContext(),
-            "Pokemod Detail info: $pokemonDetailData",
-            Toast.LENGTH_LONG
-        ).show()
         bindDetailData(pokemonDetailData)
     }
 
+    @SuppressLint("SetTextI18n")
     private fun bindDetailData(pokemonDetailData: PokemonDetailData) {
-        Log.d("PokemonDetailFragment", "bindDetailData() : $pokemonDetailData")
-        idTextView.text = pokemonDetailData.id.toString()
-        orderTextView.text = pokemonDetailData.order.toString()
-        nameTextView.text = pokemonDetailData.name
-        heightTextView.text = pokemonDetailData.height.toString()
-        weightTextView.text = pokemonDetailData.weight.toString()
-        baseExperienceTextView.text = pokemonDetailData.base_experience.toString()
+        idTextView.text = "ID: " + pokemonDetailData.id.toString()
+        orderTextView.text = "Order: " + pokemonDetailData.order.toString()
+        nameTextView.text = "Name: " + pokemonDetailData.name
+        heightTextView.text = "Height: " + pokemonDetailData.height.toString()
+        weightTextView.text = "Weight: " + pokemonDetailData.weight.toString()
+        baseExperienceTextView.text = "Base experience: " + pokemonDetailData.base_experience.toString()
     }
 
     private fun injectDependency() {

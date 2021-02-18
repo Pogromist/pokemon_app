@@ -4,8 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.pokemonapp.App
 import com.example.pokemonapp.R
-import com.example.pokemonapp.di.DaggerCustomViewPresenterComponent
+import com.example.pokemonapp.di.component.DaggerApplicationComponent
+import com.example.pokemonapp.di.modules.FragmentModule
+import com.example.pokemonapp.navigation.Screens
 import kotlinx.android.synthetic.main.custom_view_fragment.*
 import moxy.MvpAppCompatFragment
 import javax.inject.Inject
@@ -14,6 +17,11 @@ class CustomViewFragment : MvpAppCompatFragment(), CustomViewView {
 
     @Inject
     lateinit var customViewPresenter: CustomViewPresenter
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        injectDependency()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -24,16 +32,28 @@ class CustomViewFragment : MvpAppCompatFragment(), CustomViewView {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
-        DaggerCustomViewPresenterComponent.create().inject(this)
         customViewPresenter.attachView(this)
-
         btnDraw.setOnClickListener {
             drawShape()
         }
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        customViewPresenter.detachView(this)
+        customViewPresenter.onDestroy()
+    }
+
     override fun drawShape() {
-        customViewPresenter.onDrawButtonClicked()
+        customViewPresenter.onDrawButtonClicked(requireContext())
+    }
+
+    private fun injectDependency() {
+        val customViewFragmentComponent = DaggerApplicationComponent
+            .builder()
+            .fragmentModule(FragmentModule())
+            .build()
+
+        customViewFragmentComponent.inject(this)
     }
 }

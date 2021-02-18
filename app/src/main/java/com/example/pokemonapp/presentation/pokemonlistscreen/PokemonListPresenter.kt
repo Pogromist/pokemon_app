@@ -1,6 +1,5 @@
 package com.example.pokemonapp.presentation.pokemonlistscreen
 
-import android.util.Log
 import com.example.pokemonapp.data.model.Result
 import com.example.pokemonapp.repository.PokemonRepository
 import com.example.pokemonapp.repository.PokemonRepositoryInterface
@@ -18,7 +17,6 @@ class PokemonListPresenter @Inject constructor() : MvpPresenter<PokemonListView>
     init {
         pokemonRepository = PokemonRepository(this)
         pokemonRepository.getPokemonsList()
-        Log.d("PokemonListPresenter", "getPokemonsList()")
     }
 
     override fun showPokemonsList(pokemonNameData: List<Result>) {
@@ -31,7 +29,6 @@ class PokemonListPresenter @Inject constructor() : MvpPresenter<PokemonListView>
     }
 
     fun onItemClicked(position: Int) {
-        Log.d("PokemonListPresenter", "onItemClicked($position)")
         pokemonRepository.savePosition(position)
     }
 }

@@ -33,26 +33,28 @@ class PokemonListFragment : MvpAppCompatFragment(),
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        Log.d("PokemonListFragment", "onCreateView()")
         return inflater.inflate(R.layout.pokemon_list_fragment, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         pokemonListPresenter.attachView(this)
-        Log.d("PokemonListFragment", "attachView()")
+        Log.d("PokemonListFragment", "onViewCreated()")
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
+        Log.d("PokemonListFragment", "onDestroyView()")
         pokemonListPresenter.detachView(this)
         pokemonListPresenter.onDestroy()
     }
 
     override fun showPokemonsList(pokemonResponseData: List<Result>) {
-        Log.d("PokemonListFragment", "showPokemonsList()")
+        //Log.d("PokemonListFragment", "showPokemonsList()")
         val adapter = PokemonListAdapter(pokemonResponseData)
         adapter.setOnItemClickListener(object : PokemonListAdapter.OnItemCLickListener {
             override fun onItemCLick(position: Int) {
-                Log.d("PokemonListFragment", "onItemClick($position)")
+                //Log.d("PokemonListFragment", "onItemClick($position)")
                 App.INSTANCE.router.navigateTo(Screens.PokemonDetailScreen())
                 pokemonListPresenter.onItemClicked(position)
             }
