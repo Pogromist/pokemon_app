@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Pokemon App</string>
+    <string name="pokemon_fragment">List of Pokemons</string>
+    <string name="custom_view_fragment">Custom View</string>
 </resources>
