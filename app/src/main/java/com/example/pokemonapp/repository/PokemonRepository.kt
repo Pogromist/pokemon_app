@@ -43,7 +43,7 @@ class PokemonRepository(
     }
 
     override fun savePosition(position: Int) {
-        Position.position = position
+        UtilObject.position = position
     }
 
     override fun disposeAll() {
@@ -55,7 +55,8 @@ class PokemonRepository(
     }
 }
 
-object Position {
+object UtilObject {
     var position: Int? = null
     var flag: Boolean? = null
+    var isFirstTimeCreated = true
 }
