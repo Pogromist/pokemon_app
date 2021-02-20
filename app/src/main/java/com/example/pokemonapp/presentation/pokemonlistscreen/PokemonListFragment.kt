@@ -12,6 +12,7 @@ import com.example.pokemonapp.data.model.Result
 import com.example.pokemonapp.di.component.DaggerApplicationComponent
 import com.example.pokemonapp.di.modules.FragmentModule
 import com.example.pokemonapp.navigation.Screens
+import com.example.pokemonapp.repository.UtilObject
 import kotlinx.android.synthetic.main.pokemon_list_fragment.*
 import moxy.MvpAppCompatFragment
 import javax.inject.Inject
@@ -39,7 +40,10 @@ class PokemonListFragment : MvpAppCompatFragment(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         pokemonListPresenter.attachView(this)
-        Log.d("PokemonListFragment", "onViewCreated()")
+        if (!UtilObject.isFirstTimeCreated) {
+            pokemonListPresenter.getPokemonsFromRepo()
+        }
+        pokemonListPresenter.isFirstTimeCreated()
     }
 
     override fun onDestroyView() {
@@ -55,7 +59,7 @@ class PokemonListFragment : MvpAppCompatFragment(),
         adapter.setOnItemClickListener(object : PokemonListAdapter.OnItemCLickListener {
             override fun onItemCLick(position: Int) {
                 //Log.d("PokemonListFragment", "onItemClick($position)")
-                App.INSTANCE.router.navigateTo(Screens.PokemonDetailScreen())
+                App.INSTANCE.router.navigateTo(Screens.pokemonDetailScreen())
                 pokemonListPresenter.onItemClicked(position)
             }
         })
