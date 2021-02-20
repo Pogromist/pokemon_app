@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        App.INSTANCE.router.replaceScreen(Screens.PokemonListScreen())
+        App.INSTANCE.router.replaceScreen(Screens.pokemonListScreen())
 
         val customView = CustomView(this)
 
@@ -24,8 +24,8 @@ class MainActivity : AppCompatActivity() {
 
         bottomNavigationMenu.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.pokemonListFragment -> App.INSTANCE.router.replaceScreen(Screens.PokemonListScreen())
-                R.id.customViewFragment -> App.INSTANCE.router.replaceScreen(Screens.CustomViewScreen())
+                R.id.pokemonListFragment -> App.INSTANCE.router.replaceScreen(Screens.pokemonListScreen())
+                R.id.customViewFragment -> App.INSTANCE.router.replaceScreen(Screens.customViewScreen())
             }
             true
         }
