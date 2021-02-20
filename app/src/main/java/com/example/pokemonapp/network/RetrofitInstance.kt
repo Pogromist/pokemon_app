@@ -26,4 +26,5 @@ object RetrofitInstance {
         loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
         return retrofit
     }
+
 }

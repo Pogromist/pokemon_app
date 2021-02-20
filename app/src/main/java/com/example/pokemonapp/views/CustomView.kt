@@ -9,7 +9,7 @@ import android.view.View
 import com.example.pokemonapp.App
 import com.example.pokemonapp.R
 import com.example.pokemonapp.navigation.Screens
-import com.example.pokemonapp.repository.Position
+import com.example.pokemonapp.repository.UtilObject
 import com.example.pokemonapp.utils.Constants.Companion.SQUARE_SIZE_DEF
 
 class CustomView @JvmOverloads constructor(
@@ -34,16 +34,16 @@ class CustomView @JvmOverloads constructor(
     }
 
     fun drawShape() {
-        App.INSTANCE.router.replaceScreen(Screens.CustomViewScreen())
+        App.INSTANCE.router.replaceScreen(Screens.customViewScreen())
     }
 
     override fun onDraw(canvas: Canvas?) {
-        if (Position.flag == true) {
+        if (UtilObject.flag == true) {
             drawCircle(canvas)
-            Position.flag = false
+            UtilObject.flag = false
         } else {
             drawRectangle(canvas)
-            Position.flag = true
+            UtilObject.flag = true
         }
     }
 
