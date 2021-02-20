@@ -6,7 +6,7 @@ import com.example.pokemonapp.presentation.pokemonlistscreen.PokemonListFragment
 import com.github.terrakok.cicerone.androidx.FragmentScreen
 
 object Screens {
-    fun PokemonListScreen() = FragmentScreen { PokemonListFragment() }
-    fun PokemonDetailScreen() = FragmentScreen { PokemonDetailFragment() }
-    fun CustomViewScreen() = FragmentScreen { CustomViewFragment() }
+    fun pokemonListScreen() = FragmentScreen { PokemonListFragment() }
+    fun pokemonDetailScreen() = FragmentScreen { PokemonDetailFragment() }
+    fun customViewScreen() = FragmentScreen { CustomViewFragment() }
 }
