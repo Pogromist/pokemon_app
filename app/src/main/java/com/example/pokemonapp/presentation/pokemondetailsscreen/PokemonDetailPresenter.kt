@@ -3,7 +3,7 @@ package com.example.pokemonapp.presentation.pokemondetailsscreen
 import com.example.pokemonapp.data.model.PokemonDetailData
 import com.example.pokemonapp.repository.PokemonRepositoryDetail
 import com.example.pokemonapp.repository.PokemonRepositoryDetailInterface
-import com.example.pokemonapp.repository.Position
+import com.example.pokemonapp.repository.UtilObject
 import moxy.InjectViewState
 import moxy.MvpPresenter
 import javax.inject.Inject
@@ -16,7 +16,7 @@ class PokemonDetailPresenter @Inject constructor() : MvpPresenter<PokemonDetailV
 
     init {
         pokemonRepositoryDetail = PokemonRepositoryDetail(this)
-        pokemonRepositoryDetail.getPokemonDetails(Position.position!!)
+        pokemonRepositoryDetail.getPokemonDetails(UtilObject.position!!)
     }
 
     override fun showPokemonDetails(pokemonDetailData: PokemonDetailData) {

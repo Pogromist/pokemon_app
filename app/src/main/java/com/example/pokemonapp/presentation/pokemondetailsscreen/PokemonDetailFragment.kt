@@ -69,5 +69,4 @@ class PokemonDetailFragment : MvpAppCompatFragment(), PokemonDetailView {
         pokemonDetailFragmentComponent.inject(this)
     }
 
-
 }
